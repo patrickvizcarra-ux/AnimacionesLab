@@ -10,6 +10,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -42,16 +45,26 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Ejercicio1()
+
                         HorizontalDivider(
                             modifier = Modifier.padding(20.dp)
                         )
+
                         Ejercicio2()
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(20.dp)
+                        )
+
+                        Ejercicio3()
                     }
                 }
             }
         }
     }
 }
+
+// EJERCICIO 1: AnimatedVisibility
 
 @Composable
 fun Ejercicio1() {
@@ -75,7 +88,8 @@ fun Ejercicio1() {
             onClick = { visible = !visible }
         ) {
             Text(
-                text = if (visible) "Ocultar cuadro" else "Mostrar cuadro"
+                text = if (visible) "Ocultar cuadro"
+                else "Mostrar cuadro"
             )
         }
 
@@ -103,6 +117,8 @@ fun Ejercicio1() {
         }
     }
 }
+
+// EJERCICIO 2: animateColorAsState
 
 @Composable
 fun Ejercicio2() {
@@ -151,7 +167,8 @@ fun Ejercicio2() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = if (isGreen) "Color verde" else "Color azul",
+                text = if (isGreen) "Color verde"
+                else "Color azul",
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
@@ -161,6 +178,85 @@ fun Ejercicio2() {
 
         Text(
             text = "Animación con tween de 1000 ms",
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+// EJERCICIO 3: Animación de tamaño y posición
+
+@Composable
+fun Ejercicio3() {
+    var expanded by remember { mutableStateOf(false) }
+
+    val animatedSize by animateDpAsState(
+        targetValue = if (expanded) 160.dp else 110.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "Cambio de tamaño"
+    )
+
+    val animatedOffset by animateDpAsState(
+        targetValue = if (expanded) 50.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "Cambio de posicion"
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Ejercicio 3: Tamaño y Posición",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = { expanded = !expanded }
+        ) {
+            Text(
+                text = if (expanded) "Restablecer cuadro"
+                else "Mover y agrandar"
+            )
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Box(
+            modifier = Modifier.size(220.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Box(
+                modifier = Modifier
+                    .offset(x = animatedOffset)
+                    .size(animatedSize)
+                    .background(
+                        color = Color(0xFF9C27B0),
+                        shape = RoundedCornerShape(20.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Animado",
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Animación de tamaño y posición",
             style = MaterialTheme.typography.bodyMedium
         )
     }
