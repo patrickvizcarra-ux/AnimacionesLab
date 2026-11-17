@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.Spring
@@ -57,6 +59,12 @@ class MainActivity : ComponentActivity() {
                         )
 
                         Ejercicio3()
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(20.dp)
+                        )
+
+                        Ejercicio4()
                     }
                 }
             }
@@ -74,8 +82,7 @@ fun Ejercicio1() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Ejercicio 1: AnimatedVisibility",
@@ -258,6 +265,133 @@ fun Ejercicio3() {
         Text(
             text = "Animación de tamaño y posición",
             style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+// EJERCICIO 4: AnimatedContent
+
+enum class EstadoContenido {
+    CARGANDO,
+    CONTENIDO,
+    ERROR
+}
+
+@Composable
+fun Ejercicio4() {
+    var estado by remember {
+        mutableStateOf(EstadoContenido.CARGANDO)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Ejercicio 4: AnimatedContent",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        AnimatedContent(
+            targetState = estado,
+            transitionSpec = {
+                fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 700
+                    )
+                ) togetherWith fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 500
+                    )
+                )
+            },
+            label = "Transicion de estados"
+        ) { estadoActual ->
+
+            val color = when (estadoActual) {
+                EstadoContenido.CARGANDO -> Color(0xFFFFA000)
+                EstadoContenido.CONTENIDO -> Color(0xFF4CAF50)
+                EstadoContenido.ERROR -> Color(0xFFE53935)
+            }
+
+            val mensaje = when (estadoActual) {
+                EstadoContenido.CARGANDO -> "Cargando..."
+                EstadoContenido.CONTENIDO -> "¡Contenido cargado!"
+                EstadoContenido.ERROR -> "Ocurrio un error"
+            }
+
+            val descripcion = when (estadoActual) {
+                EstadoContenido.CARGANDO ->
+                    "Espere mientras se procesa la informacion"
+                EstadoContenido.CONTENIDO ->
+                    "La informacion se cargo correctamente"
+                EstadoContenido.ERROR ->
+                    "No se pudo completar la operacion"
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(170.dp)
+                    .background(
+                        color = color,
+                        shape = RoundedCornerShape(20.dp)
+                    )
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = mensaje,
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text(
+                        text = descripcion,
+                        color = Color.White
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = {
+                estado = when (estado) {
+                    EstadoContenido.CARGANDO ->
+                        EstadoContenido.CONTENIDO
+                    EstadoContenido.CONTENIDO ->
+                        EstadoContenido.ERROR
+                    EstadoContenido.ERROR ->
+                        EstadoContenido.CARGANDO
+                }
+            }
+        ) {
+            Text("Cambiar estado")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Estado actual: ${estado.name}",
+            style = MaterialTheme.typography.bodyMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Transicion: fadeIn 700 ms / fadeOut 500 ms",
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
