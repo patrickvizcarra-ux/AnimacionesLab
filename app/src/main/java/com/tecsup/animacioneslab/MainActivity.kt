@@ -26,8 +26,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tecsup.animacioneslab.ui.theme.AnimacionesLabTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,24 +50,22 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Ejercicio1()
-
                         HorizontalDivider(
                             modifier = Modifier.padding(20.dp)
                         )
-
                         Ejercicio2()
-
                         HorizontalDivider(
                             modifier = Modifier.padding(20.dp)
                         )
-
                         Ejercicio3()
-
                         HorizontalDivider(
                             modifier = Modifier.padding(20.dp)
                         )
-
                         Ejercicio4()
+                        HorizontalDivider(
+                            modifier = Modifier.padding(20.dp)
+                        )
+                        EjercicioFinal()
                     }
                 }
             }
@@ -85,19 +86,14 @@ fun Ejercicio1() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Ejercicio 1: AnimatedVisibility",
+            "Ejercicio 1: AnimatedVisibility",
             style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = { visible = !visible }
-        ) {
-            Text(
-                text = if (visible) "Ocultar cuadro"
-                else "Mostrar cuadro"
-            )
+        Button(onClick = { visible = !visible }) {
+            Text(if (visible) "Ocultar cuadro" else "Mostrar cuadro")
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -116,10 +112,7 @@ fun Ejercicio1() {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "¡Hola Compose!",
-                    color = Color.White
-                )
+                Text("¡Hola Compose!", color = Color.White)
             }
         }
     }
@@ -134,9 +127,7 @@ fun Ejercicio2() {
     val animatedColor by animateColorAsState(
         targetValue = if (isGreen) Color(0xFF4CAF50)
         else Color(0xFF2196F3),
-        animationSpec = tween(
-            durationMillis = 1000
-        ),
+        animationSpec = tween(durationMillis = 1000),
         label = "Cambio de color"
     )
 
@@ -147,19 +138,14 @@ fun Ejercicio2() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Ejercicio 2: animateColorAsState",
+            "Ejercicio 2: animateColorAsState",
             style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = { isGreen = !isGreen }
-        ) {
-            Text(
-                text = if (isGreen) "Cambiar a azul"
-                else "Cambiar a verde"
-            )
+        Button(onClick = { isGreen = !isGreen }) {
+            Text(if (isGreen) "Cambiar a azul" else "Cambiar a verde")
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -167,30 +153,22 @@ fun Ejercicio2() {
         Box(
             modifier = Modifier
                 .size(180.dp)
-                .background(
-                    color = animatedColor,
-                    shape = RoundedCornerShape(20.dp)
-                ),
+                .background(animatedColor, RoundedCornerShape(20.dp)),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = if (isGreen) "Color verde"
-                else "Color azul",
+                if (isGreen) "Color verde" else "Color azul",
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Animación con tween de 1000 ms",
-            style = MaterialTheme.typography.bodyMedium
-        )
+        Text("Animación con tween de 1000 ms")
     }
 }
 
-// EJERCICIO 3: Animación de tamaño y posición
+// EJERCICIO 3: Tamaño y posición
 
 @Composable
 fun Ejercicio3() {
@@ -211,7 +189,7 @@ fun Ejercicio3() {
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
         ),
-        label = "Cambio de posicion"
+        label = "Cambio de posición"
     )
 
     Column(
@@ -221,19 +199,14 @@ fun Ejercicio3() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Ejercicio 3: Tamaño y Posición",
+            "Ejercicio 3: Tamaño y Posición",
             style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = { expanded = !expanded }
-        ) {
-            Text(
-                text = if (expanded) "Restablecer cuadro"
-                else "Mover y agrandar"
-            )
+        Button(onClick = { expanded = !expanded }) {
+            Text(if (expanded) "Restablecer cuadro" else "Mover y agrandar")
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -247,34 +220,24 @@ fun Ejercicio3() {
                     .offset(x = animatedOffset)
                     .size(animatedSize)
                     .background(
-                        color = Color(0xFF9C27B0),
-                        shape = RoundedCornerShape(20.dp)
+                        Color(0xFF9C27B0),
+                        RoundedCornerShape(20.dp)
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "Animado",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Text("Animado", color = Color.White)
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Animación de tamaño y posición",
-            style = MaterialTheme.typography.bodyMedium
-        )
+        Text("Animación de tamaño y posición")
     }
 }
 
 // EJERCICIO 4: AnimatedContent
 
 enum class EstadoContenido {
-    CARGANDO,
-    CONTENIDO,
-    ERROR
+    CARGANDO, CONTENIDO, ERROR
 }
 
 @Composable
@@ -290,7 +253,7 @@ fun Ejercicio4() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Ejercicio 4: AnimatedContent",
+            "Ejercicio 4: AnimatedContent",
             style = MaterialTheme.typography.titleLarge
         )
 
@@ -299,17 +262,9 @@ fun Ejercicio4() {
         AnimatedContent(
             targetState = estado,
             transitionSpec = {
-                fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 700
-                    )
-                ) togetherWith fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 500
-                    )
-                )
+                fadeIn(tween(700)) togetherWith fadeOut(tween(500))
             },
-            label = "Transicion de estados"
+            label = "Transición de estados"
         ) { estadoActual ->
 
             val color = when (estadoActual) {
@@ -321,44 +276,34 @@ fun Ejercicio4() {
             val mensaje = when (estadoActual) {
                 EstadoContenido.CARGANDO -> "Cargando..."
                 EstadoContenido.CONTENIDO -> "¡Contenido cargado!"
-                EstadoContenido.ERROR -> "Ocurrio un error"
+                EstadoContenido.ERROR -> "Ocurrió un error"
             }
 
             val descripcion = when (estadoActual) {
                 EstadoContenido.CARGANDO ->
-                    "Espere mientras se procesa la informacion"
+                    "Espere mientras se procesa la información"
                 EstadoContenido.CONTENIDO ->
-                    "La informacion se cargo correctamente"
+                    "La información se cargó correctamente"
                 EstadoContenido.ERROR ->
-                    "No se pudo completar la operacion"
+                    "No se pudo completar la operación"
             }
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(170.dp)
-                    .background(
-                        color = color,
-                        shape = RoundedCornerShape(20.dp)
-                    )
+                    .background(color, RoundedCornerShape(20.dp))
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = mensaje,
+                        mensaje,
                         color = Color.White,
                         style = MaterialTheme.typography.titleLarge
                     )
-
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    Text(
-                        text = descripcion,
-                        color = Color.White
-                    )
+                    Text(descripcion, color = Color.White)
                 }
             }
         }
@@ -368,12 +313,9 @@ fun Ejercicio4() {
         Button(
             onClick = {
                 estado = when (estado) {
-                    EstadoContenido.CARGANDO ->
-                        EstadoContenido.CONTENIDO
-                    EstadoContenido.CONTENIDO ->
-                        EstadoContenido.ERROR
-                    EstadoContenido.ERROR ->
-                        EstadoContenido.CARGANDO
+                    EstadoContenido.CARGANDO -> EstadoContenido.CONTENIDO
+                    EstadoContenido.CONTENIDO -> EstadoContenido.ERROR
+                    EstadoContenido.ERROR -> EstadoContenido.CARGANDO
                 }
             }
         ) {
@@ -381,17 +323,208 @@ fun Ejercicio4() {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+        Text("Estado actual: ${estado.name}")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text("fadeIn 700 ms / fadeOut 500 ms")
+    }
+}
 
+// EJERCICIO FINAL: Aventura Pixel
+
+@Composable
+fun EjercicioFinal() {
+    var jumping by remember { mutableStateOf(false) }
+    var score by remember { mutableIntStateOf(0) }
+    var showPoint by remember { mutableStateOf(false) }
+
+    val jumpOffset by animateDpAsState(
+        targetValue = if (jumping) (-75).dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "Salto del personaje"
+    )
+
+    val characterSize by animateDpAsState(
+        targetValue = if (jumping) 85.dp else 70.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "Tamaño del personaje"
+    )
+
+    val characterColor by animateColorAsState(
+        targetValue = if (score % 2 == 0)
+            Color(0xFF7E57C2)
+        else
+            Color(0xFF26A69A),
+        animationSpec = tween(durationMillis = 500),
+        label = "Color del personaje"
+    )
+
+    LaunchedEffect(jumping) {
+        if (jumping) {
+            delay(450)
+            jumping = false
+        }
+    }
+
+    LaunchedEffect(showPoint) {
+        if (showPoint) {
+            delay(900)
+            showPoint = false
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
-            text = "Estado actual: ${estado.name}",
-            style = MaterialTheme.typography.bodyMedium
+            "Ejercicio Final: Aventura Pixel",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
-            text = "Transicion: fadeIn 700 ms / fadeOut 500 ms",
-            style = MaterialTheme.typography.bodySmall
-        )
+        Text("¡Salta y consigue puntos!")
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text("⭐ Puntos: ", fontSize = 20.sp)
+
+            AnimatedContent(
+                targetState = score,
+                transitionSpec = {
+                    fadeIn(tween(300)) togetherWith fadeOut(tween(300))
+                },
+                label = "Puntuación"
+            ) { puntos ->
+                Text(
+                    text = puntos.toString(),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFFF9800)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(230.dp)
+                .background(
+                    Color(0xFFB3E5FC),
+                    RoundedCornerShape(20.dp)
+                )
+        ) {
+            Text(
+                "☀️",
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp),
+                fontSize = 32.sp
+            )
+
+            Text(
+                "⭐",
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(20.dp),
+                fontSize = 28.sp
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        Color(0xFF66BB6A),
+                        RoundedCornerShape(
+                            bottomStart = 20.dp,
+                            bottomEnd = 20.dp
+                        )
+                    )
+            )
+
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = jumpOffset)
+                    .padding(bottom = 38.dp)
+                    .size(characterSize)
+                    .background(
+                        characterColor,
+                        RoundedCornerShape(18.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("😎", fontSize = 36.sp)
+            }
+
+            // CORRECCIÓN: receptor explícito de ColumnScope
+            this@Column.AnimatedVisibility(
+                visible = showPoint,
+                modifier = Modifier.align(Alignment.Center),
+                enter = fadeIn(tween(300)) + slideInVertically(),
+                exit = fadeOut(tween(300)) + slideOutVertically()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "+1 ⭐",
+                        color = Color(0xFFFF9800),
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = {
+                if (!jumping) {
+                    jumping = true
+                    score++
+                    showPoint = true
+                }
+            },
+            enabled = !jumping,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(if (jumping) "¡Saltando!" else "SALTAR")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedButton(
+            onClick = {
+                score = 0
+                jumping = false
+                showPoint = false
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Reiniciar partida")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Presiona SALTAR para conseguir puntos.")
     }
 }
